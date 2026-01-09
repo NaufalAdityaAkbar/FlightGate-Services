@@ -19,25 +19,30 @@ export default function ScrollIndicator() {
     const [activeSection, setActiveSection] = useState('hero');
 
     useEffect(() => {
-        const handleScroll = () => {
-            const scrollPosition = window.scrollY + 200;
+        const observerOptions = {
+            root: null, // use the viewport
+            rootMargin: '-45% 0px -45% 0px', // trigger when section is in the middle of the screen
+            threshold: 0
+        };
 
-            sections.forEach((section) => {
-                const element = document.getElementById(section.id);
-                if (element) {
-                    const offsetTop = element.offsetTop;
-                    const offsetBottom = offsetTop + element.offsetHeight;
-
-                    if (scrollPosition >= offsetTop && scrollPosition < offsetBottom) {
-                        setActiveSection(section.id);
-                    }
+        const handleIntersect = (entries: IntersectionObserverEntry[]) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    setActiveSection(entry.target.id);
                 }
             });
         };
 
-        window.addEventListener('scroll', handleScroll);
-        handleScroll(); // Initial check
-        return () => window.removeEventListener('scroll', handleScroll);
+        const observer = new IntersectionObserver(handleIntersect, observerOptions);
+
+        sections.forEach((section) => {
+            const element = document.getElementById(section.id);
+            if (element) {
+                observer.observe(element);
+            }
+        });
+
+        return () => observer.disconnect();
     }, []);
 
     const scrollToSection = (sectionId: string) => {

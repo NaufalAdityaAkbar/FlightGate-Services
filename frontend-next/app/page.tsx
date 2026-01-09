@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { flightApi, Flight } from '../lib/api/flights';
 import { contentApi } from '../lib/api/content';
 import { infoSectionApi } from '../lib/api/infoSections';
@@ -18,6 +18,7 @@ export default function Home() {
   const [content, setContent] = useState<any>({});
   const [infoSections, setInfoSections] = useState<any[]>([]);
   const [showScrollTop, setShowScrollTop] = useState(false);
+  const mainRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     // Fetch Content
@@ -55,24 +56,33 @@ export default function Home() {
     fetchFlights();
     const flightInterval = setInterval(fetchFlights, 30000); // 30s refresh
 
-    // Scroll to top button visibility
     const handleScroll = () => {
-      setShowScrollTop(window.scrollY > 500);
+      if (mainRef.current) {
+        setShowScrollTop(mainRef.current.scrollTop > 500);
+      }
     };
-    window.addEventListener('scroll', handleScroll);
+
+    const currentMain = mainRef.current;
+    if (currentMain) {
+      currentMain.addEventListener('scroll', handleScroll);
+    }
 
     return () => {
       clearInterval(flightInterval);
-      window.removeEventListener('scroll', handleScroll);
+      if (currentMain) {
+        currentMain.removeEventListener('scroll', handleScroll);
+      }
     };
   }, []);
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (mainRef.current) {
+      mainRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   };
 
   return (
-    <main className="h-screen w-full overflow-y-scroll snap-y snap-mandatory scroll-smooth font-sans text-slate-800">
+    <main ref={mainRef} className="h-screen w-full overflow-y-scroll snap-y snap-mandatory scroll-smooth font-sans text-slate-800">
       <PublicNavbar />
       <ScrollIndicator />
 
