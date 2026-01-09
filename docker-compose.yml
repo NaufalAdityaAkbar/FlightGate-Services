@@ -1,0 +1,89 @@
+services:
+  # Backend API (Laravel)
+  app:
+    build:
+      context: ./backend-laravel
+      dockerfile: Dockerfile
+    image: laravel-app
+    container_name: laravel-app
+    restart: unless-stopped
+    working_dir: /var/www
+    environment:
+      DB_CONNECTION: mysql
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_DATABASE: jadwalpenerbangan
+      DB_USERNAME: root
+      DB_PASSWORD: root
+    volumes:
+      - ./backend-laravel:/var/www
+    networks:
+      - flight-network
+
+  # Web Server for API (Nginx)
+  web:
+    image: nginx:alpine
+    container_name: laravel-nginx
+    restart: unless-stopped
+    ports:
+      - "8000:80"
+    volumes:
+      - ./backend-laravel:/var/www
+      - ./backend-laravel/docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - app
+    networks:
+      - flight-network
+
+  # Database (MySQL)
+  db:
+    image: mysql:8.0
+    container_name: laravel-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: jadwalpenerbangan
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - dbdata:/var/lib/mysql
+    networks:
+      - flight-network
+
+  # Database Management (phpMyAdmin)
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    restart: unless-stopped
+    environment:
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+    networks:
+      - flight-network
+  # Frontend (Disabled for faster local dev)
+  # frontend:
+  #   build:
+  #     context: ./frontend-next
+  #     dockerfile: Dockerfile
+  #   container_name: nextjs-frontend
+  #   restart: unless-stopped
+  #   ports:
+  #     - "3000:3000"
+  #   environment:
+  #     NEXT_PUBLIC_API_URL: http://localhost:8000/api
+  #   volumes:
+  #     - ./frontend-next:/app
+  #     - /app/node_modules
+  #     - /app/.next
+  #   networks:
+  #     - flight-network
+
+networks:
+  flight-network:
+    driver: bridge
+
+volumes:
+  dbdata:
+    driver: local
