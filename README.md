@@ -1,18 +1,43 @@
-# ✈️ Flight-Gate: Decoupled Flight Management System
+# SkyBoard - Airport Information Management System ✈️
 
-Implementasi arsitektur **Semi-Microservices** dengan memisahkan Backend Service dan Frontend UI untuk mencapai skalabilitas dan performa maksimal.
+SkyBoard adalah sistem manajemen informasi bandara modern yang dibangun dengan arsitektur semi-microservice. Sistem ini mengintegrasikan **Laravel** sebagai robust API backend dan **Next.js** sebagai high-performance frontend dashboard.
 
-### 🏗️ Architecture Overview
-Sistem ini dibangun dengan pendekatan **Headless CMS**, di mana:
-- **Core Engine (Backend):** Laravel menyediakan RESTful API untuk data jadwal penerbangan dan manajemen menu.
-- **Client Side (Frontend):** Next.js (React) bertugas melakukan *fetching* data secara asinkron untuk pengalaman pengguna yang *seamless*.
-- **Admin Isolation:** Jalur administratif dipisahkan secara struktural (Manual Route Input) untuk meningkatkan keamanan akses level root.
+---
 
-### 🛠️ Tech Stack
-- **API Provider:** Laravel 11 + MySQL
-- **Presentation Layer:** Next.js + Tailwind CSS + TypeScript
-- **Auth:** Token-based Authentication
+## 📂 Dokumentasi Lengkap
+Untuk memudahkan navigasi, dokumentasi dibagi menjadi beberapa bagian utama:
 
-### 🛡️ Security Highlights
-- **Hidden Admin Entry:** Tidak ada tautan publik untuk akses admin; login memerlukan pengetahuan rute internal (Security by Obscurity).
-- **Endpoint Protection:** API hanya merespon *request* yang valid dari *origin* tertentu.
+1.  **[Panduan Instalasi](./DOCS/INSTALLATION.md)**: Langkah-langkah menjalankan Docker, Composer, dan Migrasi Database.
+2.  **[Alur Sistem & Arsitektur](./DOCS/FLOW_SYSTEM.md)**: Penjelasan flow data dari Backend ke Frontend.
+3.  **[Fitur & Rancangan](./DOCS/FEATURES_RANCANGAN.md)**: Daftar fitur admin, publik, dan skema data.
+4.  **[Rekomendasi Ekstensi](./DOCS/EXTENSIONS.md)**: Tools pendukung pengembangan di VS Code.
+
+---
+
+## 🚀 Quick Start (Production/Docker Mode)
+Jika Anda sudah memiliki Docker, jalankan sistem dalam satu perintah:
+```powershell
+docker-compose up -d --build
+docker-compose exec app php artisan migrate:fresh --seed
+docker-compose exec app php artisan storage:link
+```
+Akses di: `http://localhost:3000`
+
+---
+
+## 🛠️ Tech Stack
+| Layer | Technology |
+| :--- | :--- |
+| **Frontend** | Next.js 15, Tailwind CSS, TypeScript |
+| **Backend** | Laravel 12 (PHP 8.2), Sanctum |
+| **Database** | MySQL 8.0 |
+| **Infrastructure** | Docker, Nginx, phpMyAdmin |
+
+---
+
+## 👥 Akun Developer (Seeded)
+*   **Email**: `admin@skyboard.id`
+*   **Password**: `password`
+
+---
+*Dikembangkan untuk Tugas Semi Microservice - Semester 7*
