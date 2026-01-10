@@ -2,12 +2,16 @@ import { fetcher } from './index';
 
 export interface Flight {
     id: number;
+    type: 'DEPARTURE' | 'ARRIVAL';
     scheduled_time: string;
     airline: string;
     flight_code: string;
     destination: string;
     gate: string;
+    terminal: string;
+    check_in_counter?: string | null;
     status: string;
+    remarks?: string | null;
 }
 
 export const flightApi = {

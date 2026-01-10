@@ -40,4 +40,4 @@ Akses di: `http://localhost:3000`
 *   **Password**: `password`
 
 ---
-*Dikembangkan untuk Tugas Semi Microservice - Semester 7*
+

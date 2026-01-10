@@ -54,7 +54,7 @@ export default function Home() {
     };
 
     fetchFlights();
-    const flightInterval = setInterval(fetchFlights, 30000); // 30s refresh
+    const flightInterval = setInterval(fetchFlights, 5000); // 5s refresh for real-time experience
 
     const handleScroll = () => {
       if (mainRef.current) {

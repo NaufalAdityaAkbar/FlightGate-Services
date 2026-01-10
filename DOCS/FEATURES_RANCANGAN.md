@@ -5,10 +5,12 @@ Daftar kapabilitas yang dimiliki oleh sistem SkyBoard.
 ## 🌟 Fitur Utama
 
 ### 📡 Sisi Publik (Guest)
-- **Real-time Flight Board**: Jadwal keberangkatan dan kedatangan pesawat yang update otomatis.
-- **Dynamic Hero Section**: Halaman sambutan yang informatif.
-- **Airport Facilities (Info Sections)**: Penjelasan fasilitas bandara dengan layout gambar berselang-seling (Z-Pattern).
-- **Interactive Scroll Dots**: Navigasi cepat antar section di sisi kanan layar.
+- **Multi-Gate Transit Information System (TIDS)**: Arsitektur sistem yang skalabel untuk mengelola informasi dari Gate A hingga Gate Z secara simultan.
+- **Dynamic Gate Allocation**: Kemampuan Admin untuk mengalokasikan gerbang secara dinamis dan real-time melalui dashboard.
+- **Consolidated Schedule Dashboard**: Tampilan layar utama yang merangkum seluruh jadwal kedatangan dan keberangkatan dalam satu tampilan terpadu.
+- **Cross-Platform Scheduling**: Sinkronisasi jadwal antara backend Laravel dan visualisasi Next.js secara instan.
+- **Real-time Status Updates**: Perubahan status (Late, Boarding, etc) yang langsung tercermin di layar publik.
+- **Filtering & Navigation**: Kemampuan publik untuk memfilter berdasarkan Terminal atau Tipe Penerbangan.
 - **Running Text Announcement**: Pengumuman penting yang berjalan di bagian bawah layar.
 - **Full Responsive**: Tampilan optimal di HP, Tablet, maupun PC.
 
